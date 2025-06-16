@@ -14,9 +14,27 @@ const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://your-deployed-frontend-url.com',
+  'https://your-deployed-admin-url.com'
+]
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true) // allow non-browser requests like curl/postman
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.'
+      return callback(new Error(msg), false)
+    }
+    return callback(null, true)
+  },
+  credentials: true
+}))
+
 // middlewares
 app.use(express.json())
-app.use(cors())
 
 // api endpoints
 app.use('/api/user',userRouter)
