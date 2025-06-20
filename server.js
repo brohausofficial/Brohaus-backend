@@ -18,6 +18,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',"*",
   'https://brohaus.vercel.app',
+  'https://brohaus-tqcr.vercel.app',
   'https://brohaus-qxvt-2r6ynbjeq-brohaus-projects.vercel.app'
 ]
 
