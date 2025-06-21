@@ -16,8 +16,8 @@ connectCloudinary()
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'http://localhost:5174',"*",
-  'https://brohaus.vercel.app',
+  'http://localhost:5174',
+  'http://brohaus.in',
   'https://brohaus-tqcr.vercel.app',
   'https://brohaus-qxvt-2r6ynbjeq-brohaus-projects.vercel.app'
 ]
