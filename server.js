@@ -23,7 +23,9 @@ const allowedOrigins = [
   'https://brohaus-tqcr.vercel.app',
   'https://brohaus-qxvt-2r6ynbjeq-brohaus-projects.vercel.app',
   "https://brohaus-admin-jay-brohaus-projects.vercel.app",
-  "https://brohaus-frontend-jay.vercel.app"
+  "https://brohaus-frontend-jay.vercel.app",
+    "https://admin.brohaus.in",
+    "https://brohaus.in"
 ]
 
 app.use(cors({
