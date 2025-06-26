@@ -19,13 +19,14 @@ const allowedOrigins = [
   'https://localhost:5173',
   'https://localhost:5174',
   'http://localhost:5174',
-  'http://brohaus.in',
-  'https://brohaus-tqcr.vercel.app',
-  'https://brohaus-qxvt-2r6ynbjeq-brohaus-projects.vercel.app',
+  'https://www.brohaus.in',  
+  'https://brohaus-frontend-jay.vercel.app',
+  'https://brohaus-frontend-jay-git-main-brohaus-projects.vercel.app',
   "https://brohaus-admin-jay-brohaus-projects.vercel.app",
   "https://brohaus-frontend-jay.vercel.app",
     "https://admin.brohaus.in",
-    "https://brohaus.in"
+    "https://brohaus.in",
+    'https://www.admin.brohaus.in'
 ]
 
 app.use(cors({
@@ -40,6 +41,8 @@ app.use(cors({
   credentials: true
 }))
 
+// ✅ Handle preflight
+app.options('*', cors())
 // middlewares
 app.use(express.json())
 
