@@ -2,6 +2,7 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from 'stripe'
 import razorpay from 'razorpay'
+import crypto from 'crypto'
 
 // global variables
 const currency = 'inr'
@@ -131,7 +132,6 @@ const placeOrderRazorpay = async (req,res) => {
     try {
         
         const { userId, items, amount, address} = req.body
-        const currency = 'INR';
 
         const orderData = {
             userId,
@@ -148,7 +148,7 @@ const placeOrderRazorpay = async (req,res) => {
 
         const options = {
             amount: amount * 100,
-            currency: currency.toUpperCase(),
+            currency: "INR",
             receipt : newOrder._id.toString()
         }
 
@@ -166,23 +166,29 @@ const placeOrderRazorpay = async (req,res) => {
     }
 }
 
-const verifyRazorpay = async (req,res) => {
-    try {
-        
-        const { userId, razorpay_order_id  } = req.body
 
-        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
-        if (orderInfo.status === 'paid') {
-            await orderModel.findByIdAndUpdate(orderInfo.receipt,{payment:true});
-            await userModel.findByIdAndUpdate(userId,{cartData:{}})
-            res.json({ success: true, message: "Payment Successful" })
+const verifyRazorpay = async (req, res) => {
+    try {
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, localOrderId, userId } = req.body;
+
+        const generated_signature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_SECRET)
+            .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+            .digest("hex");
+
+        if (generated_signature === razorpay_signature) {
+            // Update payment status
+            await orderModel.findByIdAndUpdate(localOrderId, { payment: true });
+            await userModel.findByIdAndUpdate(userId, { cartData: {} });
+
+            return res.json({ success: true, message: "Payment Verified" });
         } else {
-             res.json({ success: false, message: 'Payment Failed' });
+            return res.status(400).json({ success: false, message: "Invalid payment signature" });
         }
 
     } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
+        console.error(error)
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 }
 
