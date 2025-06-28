@@ -112,11 +112,11 @@ const verifyStripe = async (req,res) => {
     try {
         if (success === "true") {
             await orderModel.findByIdAndUpdate(orderId, {payment:true});
-            await userModel.findByIdAndUpdate(userId, {cartData: {}})
+            await userModel.findByIdAndUpdate(userId, {cartData: {}});
             res.json({success: true});
         } else {
-            await orderModel.findByIdAndDelete(orderId)
-            res.json({success:false})
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({success:false});
         }
         
     } catch (error) {
@@ -126,12 +126,30 @@ const verifyStripe = async (req,res) => {
 
 }
 
-// Placing orders using Razorpay Method
+// Updated Placing orders using Razorpay Method
 const placeOrderRazorpay = async (req,res) => {
     try {
         
         const { userId, items, amount, address} = req.body
 
+        const options = {
+            amount: amount * 100,
+            currency: currency.toUpperCase(),
+            receipt : undefined // will set after order creation
+        }
+
+        // Create Razorpay order first
+        const razorpayOrder = await new Promise((resolve, reject) => {
+            razorpayInstance.orders.create(options, (error, order) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(order);
+                }
+            });
+        });
+
+        // Create order in DB with payment:false and receipt as razorpay order id
         const orderData = {
             userId,
             items,
@@ -139,25 +157,17 @@ const placeOrderRazorpay = async (req,res) => {
             amount,
             paymentMethod:"Razorpay",
             payment:false,
-            date: Date.now()
+            date: Date.now(),
+            razorpay_order_id: razorpayOrder.id
         }
 
         const newOrder = new orderModel(orderData)
         await newOrder.save()
 
-        const options = {
-            amount: amount * 100,
-            currency: currency.toUpperCase(),
-            receipt : newOrder._id.toString()
-        }
+        // Update receipt in Razorpay order to newOrder._id as string (optional)
+        // Note: Razorpay receipt is set at order creation, so this is a workaround if needed
 
-        await razorpayInstance.orders.create(options, (error,order)=>{
-            if (error) {
-                console.log(error)
-                return res.json({success:false, message: error})
-            }
-            res.json({success:true,order})
-        })
+        res.json({success:true, order: razorpayOrder})
 
     } catch (error) {
         console.log(error)
@@ -165,6 +175,7 @@ const placeOrderRazorpay = async (req,res) => {
     }
 }
 
+// Updated Verify Razorpay
 const verifyRazorpay = async (req,res) => {
     try {
         
@@ -172,8 +183,9 @@ const verifyRazorpay = async (req,res) => {
 
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
         if (orderInfo.status === 'paid') {
-            await orderModel.findByIdAndUpdate(orderInfo.receipt,{payment:true});
-            await userModel.findByIdAndUpdate(userId,{cartData:{}})
+            // Find order by razorpay_order_id and update payment to true
+            await orderModel.findOneAndUpdate({razorpay_order_id}, {payment:true});
+            await userModel.findByIdAndUpdate(userId,{cartData:{}});
             res.json({ success: true, message: "Payment Successful" })
         } else {
              res.json({ success: false, message: 'Payment Failed' });
@@ -185,13 +197,16 @@ const verifyRazorpay = async (req,res) => {
     }
 }
 
-
 // All Orders data for Admin Panel
 const allOrders = async (req,res) => {
 
     try {
         
-        const orders = await orderModel.find({})
+        // Show only paid Razorpay orders in admin panel order list
+        const orders = await orderModel.find({
+            paymentMethod: "Razorpay",
+            payment: true
+        })
         res.json({success:true,orders})
 
     } catch (error) {
@@ -201,7 +216,7 @@ const allOrders = async (req,res) => {
 
 }
 
-// User Order Data For Forntend
+// User Order Data For Frontend
 const userOrders = async (req,res) => {
     try {
         
