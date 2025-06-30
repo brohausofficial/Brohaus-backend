@@ -2,8 +2,8 @@ import userModel from "../models/userModel.js";
 
 const onlyAdminAccess = async (req, res, next) => {
     try {
-        if (req.body.userId) {
-            const user = await userModel.findById(req.body.userId)
+        if (req.userId) {
+            const user = await userModel.findById(req.userId)
             if (!user && user.role !== "admin" && user.mobileNumber !== process.env.ADMIN_MOBILE) {
                 res.json({ success: false, message: "Unauthorized Access" })
             }

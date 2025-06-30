@@ -1,24 +1,19 @@
 import jwt from 'jsonwebtoken'
 
 const authUser = async (req, res, next) => {
-
-    const { token } = req.headers;
-
+    // Extracting JWT from headers from request
+    let token = req.headers.authorization; // Check token in HTTP-only cookie (Web)
     if (!token) {
-        return res.json({ success: false, message: 'Unauthorized Access' })
+        return res.status(401).json({error: 'Unauthorized, Token is missing'});
     }
-
+    token = token.split(' ')[1];
     try {
-
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET)
-        req.body.userId = token_decode.id
-        next()
-
+        req.userId = jwt.verify(token, process.env.JWT_SECRET).id;
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })
     }
-
+    return next();
 }
 
 export default authUser

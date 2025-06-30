@@ -21,10 +21,10 @@ const placeOrder = async (req,res) => {
     
     try {
         
-        const { userId, items, amount, address} = req.body;
+        const { items, amount, address} = req.body;
 
         const orderData = {
-            userId,
+            userId: req.userId,
             items,
             address,
             amount,
@@ -36,7 +36,7 @@ const placeOrder = async (req,res) => {
         const newOrder = new orderModel(orderData)
         await newOrder.save()
 
-        await userModel.findByIdAndUpdate(userId,{cartData:{}})
+        await userModel.findByIdAndUpdate(req.userId,{cartData:{}})
 
         res.json({success:true,message:"Order Placed"})
 
@@ -51,8 +51,8 @@ const placeOrder = async (req,res) => {
 // Placing orders using Stripe Method
 const placeOrderStripe = async (req,res) => {
     try {
-        
-        const { userId, items, amount, address} = req.body
+        const userId = req.userId
+        const { items, amount, address} = req.body
         const { origin } = req.headers;
 
         const orderData = {
@@ -107,8 +107,8 @@ const placeOrderStripe = async (req,res) => {
 
 // Verify Stripe 
 const verifyStripe = async (req,res) => {
-
-    const { orderId, success, userId } = req.body
+    const userId = req.userId
+    const { orderId, success } = req.body
 
     try {
         if (success === "true") {
@@ -130,8 +130,8 @@ const verifyStripe = async (req,res) => {
 // Placing orders using Razorpay Method
 const placeOrderRazorpay = async (req,res) => {
     try {
-        
-        const { userId, items, amount, address} = req.body
+        const userId = req.userId
+        const {items, amount, address} = req.body
 
         const orderData = {
             userId,
@@ -169,10 +169,11 @@ const placeOrderRazorpay = async (req,res) => {
 
 const verifyRazorpay = async (req, res) => {
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, localOrderId, userId } = req.body;
+        const userId = req.userId
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, localOrderId } = req.body;
 
         const generated_signature = crypto
-            .createHmac("sha256", process.env.RAZORPAY_SECRET)
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
             .update(`${razorpay_order_id}|${razorpay_payment_id}`)
             .digest("hex");
 
@@ -211,9 +212,7 @@ const allOrders = async (req,res) => {
 // User Order Data For Forntend
 const userOrders = async (req,res) => {
     try {
-        
-        const { userId } = req.body
-
+        const userId = req.userId
         const orders = await orderModel.find({ userId })
         res.json({success:true,orders})
 
