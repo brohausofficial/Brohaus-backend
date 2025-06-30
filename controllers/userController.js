@@ -1,30 +1,28 @@
- import validator from "validator";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
-
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" }); // optional: add expiry
-};
+import mobileNumberOTPModel from "../models/mobileNumberOTPModel.js";
+import { createToken } from "../helpers/jwtHelper.js";
+import {sendOTPHelper} from "../helpers/OTPHelper.js";
 
 // Route for user login
-const loginUser = async (req, res) => {
+export const sendOTP = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { phone } = req.body;
 
-    const user = await userModel.findOne({ email });
+    let user = await userModel.findOne({ phone });
 
     if (!user) {
-      return res.json({ success: false, message: "User doesn't exist" });
+      if (phone === process.env.ADMIN_MOBILE) {
+        user = await userModel.create({ phone, role: "admin" });
+      } else {
+        user = await userModel.create({ phone, role: "user" });
+      }
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (isMatch) {
-      const token = createToken(user._id);
-      res.json({ success: true, token });
+    const isOTPSent = await sendOTPHelper(user)
+    if (isOTPSent) {
+      res.json({ success: true, message: "OTP Sent", isVerified: user.isVerified });
     } else {
-      res.json({ success: false, message: "Invalid credentials" });
+      res.json({ success: false, message: "An unexpected error has been occurred" });
     }
   } catch (error) {
     console.error("Login Error:", error);
@@ -32,61 +30,43 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Route for user registration
-const registerUser = async (req, res) => {
+export const verifyOTP = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { phone, otp, email } = req.body;
 
-    // check if user already exists
-    const exists = await userModel.findOne({ email });
-    if (exists) {
-      return res.json({ success: false, message: "User already exists" });
+    let user = await userModel.findOne({ phone });
+
+    if (!user) {
+      return res.json({success: false, message: "User not found"});
     }
 
-    // validate email and password
-    if (!validator.isEmail(email)) {
-      return res.json({ success: false, message: "Please enter a valid email" });
-    }
-    if (password.length < 8) {
-      return res.json({ success: false, message: "Password must be at least 8 characters long" });
+    const latestOTP = await mobileNumberOTPModel
+        .findOne({userId: user._id})
+        .sort({createdAt: -1});
+
+    if (!latestOTP) {
+      return res.json({success: false, message: "No OTP found"});
     }
 
-    // hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    if (latestOTP.otp !== otp) {
+      return res.json({success: false, message: "Invalid OTP"});
+    }
 
-    const newUser = new userModel({
-      name,
-      email,
-      password: hashedPassword,
+    if (!user.isVerified) {
+      if (!email) {
+        return res.json({success: false, message: "Email is required"});
+      }
+      user.email = email;
+      user.isVerified = true;
+      await user.save();
+    }
+    return res.json({
+      success: true,
+      message: "OTP verified successfully",
+      token: createToken(user._id)
     });
-
-    const user = await newUser.save();
-
-    const token = createToken(user._id);
-
-    res.json({ success: true, token });
   } catch (error) {
-    console.error("Register Error:", error);
+    console.error("Login Error:", error);
     res.json({ success: false, message: error.message });
   }
-};
-
-// Route for admin login
-const adminLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1d" });
-      res.json({ success: true, token });
-    } else {
-      res.json({ success: false, message: "Invalid credentials" });
-    }
-  } catch (error) {
-    console.error("Admin Login Error:", error);
-    res.json({ success: false, message: error.message });
-  }
-};
-
-export { loginUser, registerUser, adminLogin };
+}

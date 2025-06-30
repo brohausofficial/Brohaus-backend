@@ -1,13 +1,13 @@
 import express from 'express'
 import {placeOrder, placeOrderStripe, placeOrderRazorpay, allOrders, userOrders, updateStatus, verifyStripe, verifyRazorpay} from '../controllers/orderController.js'
-import adminAuth  from '../middleware/adminAuth.js'
+import onlyAdminAccess  from '../middleware/onlyAdminAccess.js'
 import authUser from '../middleware/auth.js'
 
 const orderRouter = express.Router()
 
 // Admin Features
-orderRouter.post('/list',adminAuth,allOrders)
-orderRouter.post('/status',adminAuth,updateStatus)
+orderRouter.post('/list', authUser, onlyAdminAccess,allOrders)
+orderRouter.post('/status', authUser, onlyAdminAccess,updateStatus)
 
 // Payment Features
 orderRouter.post('/place',authUser,placeOrder)
