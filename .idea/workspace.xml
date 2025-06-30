@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="Refactor user authentication and registration flow; replace adminAuth with onlyAdminAccess middleware; introduce OTP-based login; clean up redundant logic and update dependencies.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/cartController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/cartController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/orderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/orderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/onlyAdminAccess.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/onlyAdminAccess.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/productRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/productRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/userRoute.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="jayfirke" />
+                    <option name="lastUsedInstant" value="1751268514" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1751268513" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="98a84491-3d92-4562-ba77-78eb6ab15e51" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2zDbHjLR8Fq0Nu0iD9YD6V6Njrb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;jayfirke&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/jayfirke/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="" />
+      <created>1751268504611</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1751268504611</updated>
+      <workItem from="1751268505711" duration="1882000" />
+      <workItem from="1751270395385" duration="3954000" />
+      <workItem from="1751275365184" duration="1740000" />
+      <workItem from="1751277122555" duration="14549000" />
+    </task>
+    <task id="LOCAL-00001" summary="Remove sensitive credentials and unnecessary files, including `.env` and `package-lock.json`.">
+      <option name="closed" value="true" />
+      <created>1751269735030</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751269735030</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Deleted node modules folder">
+      <option name="closed" value="true" />
+      <created>1751269913860</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1751269913860</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor user authentication and registration flow; replace adminAuth with onlyAdminAccess middleware; introduce OTP-based login; clean up redundant logic and update dependencies.">
+      <option name="closed" value="true" />
+      <created>1751274397331</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1751274397331</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Remove sensitive credentials from `.env` and clean up redundant `package-lock.json` entries." />
+    <MESSAGE value="Remove sensitive credentials and unnecessary files, including `.env` and `package-lock.json`." />
+    <MESSAGE value="Deleted node modules folder" />
+    <MESSAGE value="Refactor user authentication and registration flow; replace adminAuth with onlyAdminAccess middleware; introduce OTP-based login; clean up redundant logic and update dependencies." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor user authentication and registration flow; replace adminAuth with onlyAdminAccess middleware; introduce OTP-based login; clean up redundant logic and update dependencies." />
+  </component>
+</project>

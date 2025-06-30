@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import {createAdminAccount} from "../helpers/createAdminAccount.js";
 
 const connectDB = async () => {
 
@@ -6,8 +7,8 @@ const connectDB = async () => {
         console.log("DB Connected");
     })
 
-    await mongoose.connect(`${process.env.MONGODB_URI}/e-commerce`)
-
+    await mongoose.connect(process.env.MONGODB_URI)
+    await createAdminAccount()
 }
 
 export default connectDB;
