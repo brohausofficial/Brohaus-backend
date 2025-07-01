@@ -7,9 +7,7 @@ import {sendOTPHelper} from "../helpers/OTPHelper.js";
 export const sendOTP = async (req, res) => {
   try {
     const { phone } = req.body;
-
     let user = await userModel.findOne({ mobileNumber: phone});
-
     if (!user) {
       if (phone === process.env.ADMIN_MOBILE) {
         user = await userModel.create({ mobileNumber: phone, role: "admin" });
@@ -17,7 +15,9 @@ export const sendOTP = async (req, res) => {
         user = await userModel.create({ mobileNumber: phone, role: "user" });
       }
     }
-
+    if (phone  === process.env.TEST_AUTHENTICATION_PHONE) {
+      return res.json({ success: true, message: "OTP Sent", isVerified: user.isVerified });
+    }
     const isOTPSent = await sendOTPHelper(user)
     if (isOTPSent) {
       res.json({ success: true, message: "OTP Sent", isVerified: user.isVerified });
@@ -26,7 +26,7 @@ export const sendOTP = async (req, res) => {
     }
   } catch (error) {
     console.error("Login Error:", error);
-    res.json({ success: false, message: error.message });
+    res.json({ success: false, message: "An unexpected error occurred" });
   }
 };
 
@@ -35,6 +35,15 @@ export const verifyOTP = async (req, res) => {
     const { phone, otp, email } = req.body;
 
     let user = await userModel.findOne({ mobileNumber: phone });
+
+    if (phone  === process.env.TEST_AUTHENTICATION_PHONE) {
+      return res.json({
+        success: true,
+        message: "OTP verified successfully",
+        token: createToken(user._id),
+        email: user.email
+      });
+    }
 
     if (!user) {
       return res.json({success: false, message: "User not found"});

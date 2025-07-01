@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="Refactor mobile number handling in user model; update authentication logic to use `req.userId` consistently; add resend OTP functionality; streamline routes and middleware.">
+    <list default="true" id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="Update `.idea/workspace.xml` and modify `email` field in `userModel` schema to no longer enforce uniqueness.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/cartController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/cartController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +116,7 @@
       <workItem from="1751268505711" duration="1882000" />
       <workItem from="1751270395385" duration="3954000" />
       <workItem from="1751275365184" duration="1740000" />
-      <workItem from="1751277122555" duration="19945000" />
+      <workItem from="1751277122555" duration="25010000" />
     </task>
     <task id="LOCAL-00001" summary="Remove sensitive credentials and unnecessary files, including `.env` and `package-lock.json`.">
       <option name="closed" value="true" />
@@ -156,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751301271199</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Update `.idea/workspace.xml` and modify `email` field in `userModel` schema to no longer enforce uniqueness.">
+      <option name="closed" value="true" />
+      <created>1751357191200</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1751357191200</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +178,7 @@
     <MESSAGE value="Deleted node modules folder" />
     <MESSAGE value="Refactor user authentication and registration flow; replace adminAuth with onlyAdminAccess middleware; introduce OTP-based login; clean up redundant logic and update dependencies." />
     <MESSAGE value="Refactor mobile number handling in user model; update authentication logic to use `req.userId` consistently; add resend OTP functionality; streamline routes and middleware." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor mobile number handling in user model; update authentication logic to use `req.userId` consistently; add resend OTP functionality; streamline routes and middleware." />
+    <MESSAGE value="Update `.idea/workspace.xml` and modify `email` field in `userModel` schema to no longer enforce uniqueness." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update `.idea/workspace.xml` and modify `email` field in `userModel` schema to no longer enforce uniqueness." />
   </component>
 </project>

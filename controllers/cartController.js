@@ -41,9 +41,15 @@ const updateCart = async (req,res) => {
         const userData = await userModel.findById(req.userId)
         let cartData = userData.cartData;
 
+        // Check if itemId exists in cartData, if not create it
+        if (!cartData[itemId]) {
+            cartData[itemId] = {}
+        }
+
+        // Now safely set the quantity
         cartData[itemId][size] = quantity
 
-        await userModel.findByIdAndUpdate(req.userId, {cartData})
+        await userModel.findByIdAndUpdate(req.userId, { cartData })
         res.json({ success: true, message: "Cart Updated" })
 
     } catch (error) {
