@@ -15,7 +15,7 @@ export const sendOTP = async (req, res) => {
         user = await userModel.create({ mobileNumber: phone, role: "user" });
       }
     }
-    if (phone  === process.env.TEST_AUTHENTICATION_PHONE) {
+    if (phone === process.env.TEST_AUTHENTICATION_PHONE) {
       return res.json({ success: true, message: "OTP Sent", isVerified: user.isVerified });
     }
     const isOTPSent = await sendOTPHelper(user)
@@ -36,7 +36,7 @@ export const verifyOTP = async (req, res) => {
 
     let user = await userModel.findOne({ mobileNumber: phone });
 
-    if (phone  === process.env.TEST_AUTHENTICATION_PHONE) {
+    if (phone === process.env.TEST_AUTHENTICATION_PHONE) {
       return res.json({
         success: true,
         message: "OTP verified successfully",
