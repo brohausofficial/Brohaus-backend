@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="Update user and cart controllers: improve OTP handling for test authentication and add safety checks for cart updates.">
+    <list default="true" id="8ad9c84a-69a0-4fa8-a229-fef638a3b0b5" name="Changes" comment="Fix spacing for test phone number checks in `userController`.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,8 @@
       <workItem from="1751268505711" duration="1882000" />
       <workItem from="1751270395385" duration="3954000" />
       <workItem from="1751275365184" duration="1740000" />
-      <workItem from="1751277122555" duration="26591000" />
+      <workItem from="1751277122555" duration="26619000" />
+      <workItem from="1751459892513" duration="60000" />
     </task>
     <task id="LOCAL-00001" summary="Remove sensitive credentials and unnecessary files, including `.env` and `package-lock.json`.">
       <option name="closed" value="true" />
@@ -173,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751383213144</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fix spacing for test phone number checks in `userController`.">
+      <option name="closed" value="true" />
+      <created>1751433277004</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1751433277005</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +198,7 @@
     <MESSAGE value="Improve OTP handling in userController; enhance cart update logic in cartController; add test authentication phone logic." />
     <MESSAGE value="Enhance OTP handling in `userController` with test phone checks; improve cart update logic in `cartController`." />
     <MESSAGE value="Update user and cart controllers: improve OTP handling for test authentication and add safety checks for cart updates." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update user and cart controllers: improve OTP handling for test authentication and add safety checks for cart updates." />
+    <MESSAGE value="Fix spacing for test phone number checks in `userController`." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix spacing for test phone number checks in `userController`." />
   </component>
 </project>
